@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 20:11:35 by momihamm          #+#    #+#             */
-/*   Updated: 2024/04/19 20:13:47 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/04/23 02:14:14 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,4 +14,12 @@
 
 #include <iostream>
 #include <string>
+#include <sys/socket.h>
 
+class DataToStart
+{
+	public :
+		std::string	Port;
+		std::string	Pass;
+		int			IdSocket;
+};

@@ -6,11 +6,11 @@
 #    By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/19 20:11:30 by momihamm          #+#    #+#              #
-#    Updated: 2024/04/19 20:12:34 by momihamm         ###   ########.fr        #
+#    Updated: 2024/04/21 00:12:13 by momihamm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = srv
+NAME = ircserv
 CC = c++
 FLAGS = -Wall -Wextra -Werror -std=c++98
 FILES = $(wildcard *.cpp)
