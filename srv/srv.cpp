@@ -6,20 +6,24 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 20:11:33 by momihamm          #+#    #+#             */
-/*   Updated: 2024/04/23 02:32:29 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/04/27 10:46:31 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "srv.hpp"
+#include <arpa/inet.h>
 
-// creat a socket
-// 
 
+// creat a socket;
+// bind a socket;
+// Mark the socket for listening in
 
 int main(int ac, char **av)
 {
 	(void)av;
 	DataToStart start;
+	sockaddr_in SrvAddr;
+	(void) SrvAddr;
 	if (ac == 3)
 	{
 		// int     first_socket;
@@ -33,7 +37,8 @@ int main(int ac, char **av)
 		}
 		// std::cout << "kmi " << start.Port << " "<< start.Pass <<  std::endl ;
 		start.IdSocket = socket (AF_INET, SOCK_STREAM, 0);
-		std::cout << start.IdSocket << std::endl;
+		start.binding = bind (start.IdSocket, (const sockaddr *)& SrvAddr, sizeof (SrvAddr));
+		std::cout << "ID " << start.IdSocket << " Binding " << start.binding << std::endl;
 		// first_socket = socket ();
 	}
 	else
