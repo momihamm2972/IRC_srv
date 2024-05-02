@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   srv.hpp                                            :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 20:11:35 by momihamm          #+#    #+#             */
-/*   Updated: 2024/04/27 10:44:34 by momihamm         ###   ########.fr       */
+/*   Created: 2024/05/02 17:01:48 by momihamm          #+#    #+#             */
+/*   Updated: 2024/05/02 17:01:51 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
+#include "Cmds.hpp"
 
-#include <iostream>
-#include <string>
-#include <sys/socket.h>
-
-class DataToStart
+int main()
 {
-	public :
-		std::string	Port;
-		std::string	Pass;
-		int			IdSocket;
-		int			binding;
-};
+    std::cout << "FCK" << std::endl;
+}
