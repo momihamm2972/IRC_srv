@@ -1,0 +1,64 @@
+pass pass
+nick mo7a
+user kmi
+
+
+JOIN #foo,#bar fubar,foobar
+join fasd,rty,yuuy,qwqw,cvb,ilo etr,e,erert,iuiu,ooio,ff
+
+case PASS:
+	PASS password
+	PASS :password contains spaces
+case NICK:
+	NICK nickname
+	NICK :nickname
+case USER:
+	//ps: realname makhasch ikon fih numberss
+	USER username <(chi 7aja ignored)> <(chi 7aja ignored)> realname
+case JOIN:
+	JOIN #name
+	JOIN #name1,#name2
+	JOIN #name1,#name2 key1
+	JOIN #name1,#name2 key1,key2
+case PRIVMSG:
+		PRIVMSG <channel or nickname> message
+		PRIVMSG <channel or nickname> :message with spaces
+case KICK:
+		// khas tkon operator
+		KICK <channel name> <nickname> [raison]
+case INVITE:
+	// khas tkon operator
+	INVITE nickname <channel>
+case TOPIC:
+	// khas tkon operator il kan l mode dyal channel +t
+	TOPIC channel_name // show the channel topics
+	TOPIC channel_name topic
+	TOPIC channel_name :topic with spaces
+case MODE:
+	// khas tkon operator
+	MODE channel_name // affich activated mode in channel can do it by any member in channel
+	MODE channel_name +i // set channel mode to invite only
+	MODE channel_name +t // il akan channel fiha mode topic, ghir operator eli kaybadlo topic
+	MODE channel_name +k password// set password to the channel
+	MODE channel_name +l limit// set limit to the channel AKA max users
+	MODE channel_name +o nickname// set nickname as operator
+
+	MODE channel_name -i // anyone can join the channel (beware ila kant channel 3dha password)
+	MODE channel_name -t // anyone can set topic
+	MODE channel_name -k old_password// unset password, now the channel is accesseble withour paassword
+	MODE channel_name -l // the channel has no limit
+	MODE channel_name -o nickname// set nickname default users
+
+	MODE channel_name +itklo password limit nickname
+	MODE channel_name +itkol password nickname limit
+
+	MODE channel_name +itklo -itklo password limit nickname old_password nickname
+	MODE channel_name +itkol -itkol password nickname old_password nickname
+
+	MODE channel_name +k password// set password to the channel
+	MODE channel_name +k another_password// alredy set to channel, khask tdir `MODE channel_name -k old_password` 3ad y t setih
+
+
+case QUIT:
+		QUIT // quit mn server
+		QUIT reason // quit mn server with a reason

@@ -1,0 +1,24 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+    vector<pair<string,string>> revenue;
+    vector<pair<string,string>>::iterator it;
+    // int i = 0;
+    // revenue[i].first = "string";
+    // revenue[i].second = "kmi";
+    // revenue.push_back("string","lkmaya");
+    // cout << revenue[i].second << endl;
+    revenue.push_back(make_pair("kmi", "mc"));
+    // cout << revenue[i].first <<" " << revenue[i].second << endl;
+    it = revenue.begin();
+    while (it != revenue.end())
+    {
+        cout << it->first << " " << it->second << endl;
+        it++;
+    }
+    return 0;
+}
