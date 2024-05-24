@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:50:01 by momihamm          #+#    #+#             */
-/*   Updated: 2024/05/23 19:36:57 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:56:04 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,37 +32,6 @@
 namespace ircserv
 {
 	
-	std::vector<std::string> mySplit(std::string str, std::string del)
-	{
-		std::vector<std::string>            towD;
-		std::vector<std::string>::iterator  it;
-		int                                 indx;
-		int                                 valu;
-
-		indx = 0;
-		while (indx <= str.length())
-		{
-			valu = str.find (del);
-			if (valu != std::string::npos)
-			{
-				towD.push_back (str.substr(0, valu));
-				str.erase(0, valu + 1);
-				indx = 0;
-			}
-				indx++;
-		}
-		if (!str.empty())
-			towD.push_back (str.substr(0,str.length()));
-		it = towD.begin();
-		while (it != towD.end())
-		{
-			std::cout << *it << std::endl;
-			it++;
-		}
-		return (towD);
-	}
-	// check how many of the key and the chanels;
-
 	int	howManyWord(std::string str)
 	{
 		int	end;
@@ -88,7 +57,11 @@ namespace ircserv
 		it = data.begin();
 		while (it != data.end())
 		{
-			std::cout << it->first << "->" << it->second << std::endl;
+			std::cout << it->first << "->";
+			if (it->second.empty())
+				std::cout << "NO KEY" << std::endl;
+			else
+				std::cout << it->second << std::endl;
 			it++;
 		}
 	}
@@ -104,14 +77,11 @@ namespace ircserv
 		int													words;
 		int													wordsK;
 
-		// work in the str1
-		// how many word
 		if (howManyWord(str2) > howManyWord(str1))
 		{
 			std::cout << "ERROR NOT ENOGH PARAM\n";
 			return data;
 		}
-		// @@@@@@@@@@@@@
 		words = howManyWord (str1);
 		wordsK = howManyWord (str2);
 		indx = 0;
@@ -123,6 +93,13 @@ namespace ircserv
 			{
 				std::cout << "it continse a comma\n";
 				strC = str1.substr(0, puseChnl);
+				if (strC.find ('#') == std::string::npos && strC.find ('&') == std::string::npos)
+				{
+					std::cout << "ERROR NOT VALID CHNL\n";
+					break;
+				}
+				else
+					strC.erase(0, 1);
 				str1.erase(0, puseChnl + 1);
 				puseKey = str2.find(',');
 				if (puseKey != std::string::npos)
@@ -136,6 +113,13 @@ namespace ircserv
 			}
 			else
 			{
+				if (str1.find ('#') == std::string::npos && str1.find ('&') == std::string::npos)
+				{
+					std::cout << "ERROR NOT !@# VALID CHNL\n";
+					break;
+				}
+				else
+					str1.erase(0, 1);
 				data.push_back(make_pair(str1,str2));
 			}
 			if (indx + 1 == wordsK)
@@ -145,7 +129,7 @@ namespace ircserv
 				}
 			indx++;
 		}
-		printVector(data);
+		// printVector(data);
 		return data;
 	}
 	
@@ -155,22 +139,47 @@ namespace ircserv
 		std::cout << "commandArgs: [" << commandArgs << "]" << std::endl;
 	
 		// !@@@@@@@@@@@@@@@@@@@@@@!
-		std::string	str1;
-		std::string	str2;
-		int			puse;
-		int			puse0;
+		std::vector<std::pair<std::string, std::string> >	data;
+		ircserv::Server										*srv;
+		ircserv::Channel									*chnl;
+		std::string											str1;
+		std::string											str2;
+		int													puse;
+		int													puse0;
 
 		puse = commandArgs.find(' ');
+		srv = this->getServer();
 		if (puse != std::string::npos)
 		{
 			std::cout << "it's contin  a space\n";
 			str1 = commandArgs.substr (0, puse);
 			str2 = commandArgs.substr (puse + 1);
-			parssAndUseData(str1, str2);
+			data = parssAndUseData(str1, str2);
+			printVector(data);
 		}
 		else
 		{
 			std::cout << "norm\n";
+			str1 = commandArgs.substr(0);
+			std::cout << ">>>>>>>>>>>>>>>>>>>>>>" << str1 << std::endl;
+			if (str1.find ('#') == std::string::npos && str1.find ('&') == std::string::npos)
+			{
+				std::cout << "ERROR NOT %= VALID CHNL\n";
+				// break;
+			}
+			else
+				str1.erase(0, 1);
+			std::cout << "@@@@@@@@@@@@@@@@@@@@@@@" << str1 << std::endl;
+			// join simple 121232452353564645645757567457567573624573598237526583794562356723842467128947624897621894235; joini
+			// check if exist or not;
+			if (srv->getChannelByName(str1))
+			{
+				std::cout << "exist\n";
+			}
+			else
+			{
+				std::cout << "not exist\n";
+			}
 		}
 		
 		
