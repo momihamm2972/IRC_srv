@@ -1,0 +1,15 @@
+// check if the channel is exite then check if ther is password or not if ther is compare the main password with the paassword of the input;
+// check is the client is already joined the chennal;
+// if the channel has a key you must join to it with the key
+// if the client want to join a key_channel he must entre the password;
+
+
+
+
+
+
+
+
+
+
+ragle nputs multiple i= join #mora 123456 + join #mora 123456 ! katjoini lnfss channel katl3 not exist;

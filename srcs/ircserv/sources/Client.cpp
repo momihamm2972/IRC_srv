@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         :::      ::::::::  */
+/*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahabachi <ahabachi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:06:11 by ahabachi          #+#    #+#             */
-/*   Updated: 2024/05/03 18:47:31 by ahabachi         ###   ########.fr       */
+/*   Updated: 2024/05/14 22:09:50 by ahaloui          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*                                                                            */
+
 /*  █████████            ██████████         ██████████         ██████████     */
 /*  ██     ██                    ██                 ██         ██      ██     */
 /*         ██                    ██                 ██         ██      ██     */
@@ -194,6 +194,9 @@ namespace ircserv
 				break ;
 			}
 		}
+
+	
+
 		std::string commandName = ircserv::toupper(this->_command.substr(0, i));
 		std::string commandArgs = ircserv::ltrim(this->_command.substr(i, this->_fullbuffer.length() - i));
 		if (commandName == "INVITE")

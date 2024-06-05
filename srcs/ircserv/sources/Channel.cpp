@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         :::      ::::::::  */
+/*                                                        :::      ::::::::   */
 /*   Channel.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahabachi <ahabachi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:04:36 by ahabachi          #+#    #+#             */
-/*   Updated: 2024/05/03 18:51:47 by ahabachi         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:36:33 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*                                                                            */
+
 /*  █████████            ██████████         ██████████         ██████████     */
 /*  ██     ██                    ██                 ██         ██      ██     */
 /*         ██                    ██                 ██         ██      ██     */
@@ -302,6 +302,11 @@ namespace ircserv
 	{
 		this->_key = "";
 		this->unsetMode(CHANNEL_MODE_K);
+	}
+	
+	std::string Channel::getKey(void)//momihamm
+	{
+		return (this->_key);
 	}
 
 	void Channel::setTopic(const std::string topic)

@@ -1,11 +1,17 @@
+git checkout -b ahabachi
+// modify
+git add ...
+git commit -m "..."
+git push origin ahabachi
+
+
 pass pass
-nick mo7a
-user kmi
+nick kmi
+user mo7a
 
 
-JOIN #foo,#bar fubar,foobar
-join fasd,rty,yuuy,qwqw,cvb,ilo etr,e,erert,iuiu,ooio,ff
 
+>>>>>>> main
 case PASS:
 	PASS password
 	PASS :password contains spaces
@@ -62,3 +68,6 @@ case MODE:
 case QUIT:
 		QUIT // quit mn server
 		QUIT reason // quit mn server with a reason
+
+
+// for me:  MODE channel_name       +itklo password     limit nickname     -itkl       old_password       nickname      

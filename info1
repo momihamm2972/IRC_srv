@@ -38,6 +38,7 @@ MODE:
     MODE #channel_name +iolkt nickname number newkey       // [operator]
     MODE #channel_name -iolkt nickname                     // [operator]
     MODE #channel_name +io-lkt nickname                    // [operator]
+    MODE #channel_name +i+o+l+k+t -i nickname              // [operator]
 
 PART:
     PART #channel_name // [anyone]

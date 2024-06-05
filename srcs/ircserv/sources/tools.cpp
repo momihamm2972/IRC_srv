@@ -119,4 +119,23 @@ namespace ircserv
 			((unsigned char *)s)[i - 1] = 0;
 		}
 	}
+	std::string nextWord(std::string &s)
+	{
+		size_t i = 0;
+		s = ircserv::ltrim(s);
+		while ((i < s.length()) && (ircserv::isspace(s[i]) == false))
+		{
+			i = i + 1;
+		}
+		std::string word = s.substr(0, i);
+		if (i < s.length())
+		{
+			s = ircserv::ltrim(s.substr(i + 1, s.length() - i - 1));
+		}
+		else
+		{
+			s = "";
+		}
+		return (word);
+	}
 };

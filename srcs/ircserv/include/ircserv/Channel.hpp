@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:04:36 by ahabachi          #+#    #+#             */
-/*   Updated: 2024/05/18 06:01:29 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/05 15:31:26 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ namespace ircserv
 
 			void        setKey(std::string key);
 			void        unsetKey(void);
+			std::string	getKey(void);//momihamm
 		
 			void        setTopic(const std::string topic);
 			std::string getTopic(void) const;
