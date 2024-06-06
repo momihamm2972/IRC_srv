@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MODE.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:30:11 by ahaloui           #+#    #+#             */
-/*   Updated: 2024/05/15 18:06:24 by ahaloui          ###   ########.fr       */
+/*   Updated: 2024/06/06 21:55:03 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ namespace ircserv
                 }
                 channel->setKey(key);
                 *this << "324 " << this->getNickname() << " " << channel->getName() << " +k" << ircserv::crlf;
+                std::cout << "_____________-------___________the new key of chnl = " << channel->getKey() << std::endl;
             }
             else if (tmp == "-k")
             {
@@ -195,7 +196,11 @@ namespace ircserv
                     return (0);
                 }
                 if (!channel->hasMode(CHANNEL_MODE_L))
+                {
+                    std::cout << "----- 1 22 ---- \n";
                     channel->setMode(CHANNEL_MODE_L);
+                }
+                    
                 try 
                 {
                     channel->setLimit(std::stoi(limit));
@@ -214,7 +219,7 @@ namespace ircserv
                 
                 if (channel->hasMode(CHANNEL_MODE_L))
                     channel->unsetMode(CHANNEL_MODE_L);
-                channel->setLimit(0);
+                channel->setLimit(INT_MAX);
                 *this << "324 " << this->getNickname() << " " << channel->getName() << " -l" << ircserv::crlf;
             }
             /*********************************************************************************/
