@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:04:36 by ahabachi          #+#    #+#             */
-/*   Updated: 2024/06/05 15:36:33 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:11:01 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ namespace ircserv
 		this->_operators.clear();
 		this->_invitation_list.clear();
 		this->_clients.clear();
+		this->_kicked.clear();//momihamm
 	}
 	
 	Channel::~Channel()
@@ -50,6 +51,7 @@ namespace ircserv
 		this->_operators.clear();
 		this->_invitation_list.clear();
 		this->_clients.clear();
+		this->_kicked.clear();//momihamm
 	}
 	
 	Channel& Channel::operator=(Channel const& other)
@@ -66,6 +68,7 @@ namespace ircserv
 		this->_operators       = other._operators;
 		this->_invitation_list = other._invitation_list;
 		this->_clients         = other._clients;
+		this->_kicked		   = other._kicked;//momihamm
 		this->_stream.str(other._stream.str());
 		return (*this);
 	}
@@ -84,6 +87,7 @@ namespace ircserv
 		this->_operators.clear();
 		this->_invitation_list.clear();
 		this->_clients.clear();
+		this->_kicked.clear();
 		this->_stream.str("");
 		this->addClient(operator_nickname);
 	}
@@ -101,7 +105,11 @@ namespace ircserv
 	{
 		return (this->_invitation_list);
 	}
-
+	std::vector<std::string /* nickname */> &Channel::getKickedClients(void)//momihamm
+	{
+		return (this->_kicked);
+	}
+	
 	/* ****************** methods ****************** */
 	bool Channel::isClient(std::string nickname)
 	{
@@ -200,6 +208,20 @@ namespace ircserv
 		{
 			this->getOperators().erase(it);
 		}
+	}
+
+	bool Channel::isKicked(std::string nickname)//momihamm
+	{
+		std::vector<std::string>::iterator it = std::find(
+			_kicked.begin(),
+			_kicked.end(),
+			nickname
+		);
+		if (it != _kicked.end())
+		{
+			return (true);
+		}
+		return (false);
 	}
 
 	bool Channel::isInvited(std::string nickname)

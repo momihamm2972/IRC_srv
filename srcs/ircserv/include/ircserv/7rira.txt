@@ -1,0 +1,10 @@
+pass pass 
+nick zan9a
+user mo7a
+:localhost 001 zan9a :Welcome to the ft_irc Internet Relay Chat Network zan9a
+:localhost 002 zan9a :Your host is localhost[176.58.122.119/6667], running version 1.0.0
+:localhost 003 zan9a :This server was created Tue May 07 2024 at 19:05:10 UTC
+join #food
+366 zan9a #food :End of /NAMES list
+kick #food kmi   
+441 <kmi> <kmi> <#food> :They aren't on that channel

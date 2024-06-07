@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:50:01 by momihamm          #+#    #+#             */
-/*   Updated: 2024/06/06 22:14:23 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:47:16 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,15 @@ namespace ircserv
 					std::cout << "exist  o tanchofo blanha replay\n";
 					chnl = srv->getChannelByName(it->first);
 					// work in invited
+					// kicked
+					if (chnl->isKicked(this->getNickname()) == true)
+					{
+						// https://modern.ircdocs.horse/#errbannedfromchan-474
+						// "<client> <channel> :Cannot join channel (+b)"
+						*this << "474 <" << this->getNickname() << "> <" << chnl->getName() << "> :Cannot join channel (+b)" << ircserv::crlf;
+						return 1;
+					}
+					// 
 					if (chnl->hasMode(CHANNEL_MODE_L) == true)
 					{
 						// std::cout << "131313131313311313131313131313131313133113131313131313131331131331313   >>" << chnl->getLimit() << "   >??"<<  howManyClientInTheChannel(chnl->getClients())<<"\n";
@@ -287,12 +296,12 @@ namespace ircserv
 						//   "<client> <channel> :End of /NAMES list"
 						chnl->addClient (this->getNickname());
 					}
-					// std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
-					// solovectorprinting (chnl->getOperators());
-					// std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
-					// std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
-					// solovectorprinting (chnl->getClients());
-					// std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
+					std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
+					solovectorprinting (chnl->getOperators());
+					std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
+					std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
+					solovectorprinting (chnl->getClients());
+					std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
 				}
 				else
 				{
@@ -304,12 +313,12 @@ namespace ircserv
 						std::cout << "setkey\n";
 					}
 					list_of_chles.insert(std::make_pair(it->first, *chnl));
-					// std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
-					// solovectorprinting (chnl->getOperators());
-					// std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
-					// std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
-					// solovectorprinting (chnl->getClients());
-					// std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
+					std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
+					solovectorprinting (chnl->getOperators());
+					std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
+					std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
+					solovectorprinting (chnl->getClients());
+					std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
 					if (chnl)
 						*this << "366 " << this->getNickname() << " " << chnl->getName() << " :End of /NAMES list" << ircserv::crlf;  
 				}

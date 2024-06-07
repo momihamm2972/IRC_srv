@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:04:36 by ahabachi          #+#    #+#             */
-/*   Updated: 2024/06/05 15:31:26 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/07 18:07:28 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ namespace ircserv
 			std::vector<std::string /* nickname */> _operators;
 			std::vector<std::string /* nickname */> _invitation_list;
 			std::vector<std::string /* nickname */> _clients;
+			std::vector<std::string /* nickname */> _kicked;//momihamm
 		public:
 			Channel();
 			~Channel();
@@ -64,6 +65,7 @@ namespace ircserv
 			std::vector<std::string /* nickname */> &getOperators(void);
 			std::vector<std::string /* nickname */> &getClients(void);
 			std::vector<std::string /* nickname */> &getInvitedClients(void);
+			std::vector<std::string /* nickname */> &getKickedClients(void);
 			/* ****************** methods ****************** */
 
 			bool        isClient(std::string nickname);
@@ -73,6 +75,8 @@ namespace ircserv
 			bool        isOperator(std::string nickname);
 			bool        addOperator(std::string nickname);
 			void        removeOperator(std::string nickname);
+			
+			bool		isKicked(std::string nickname);//momihamm
 
 			bool        isInvited(std::string nickname);
 			void        inviteClient(std::string nickname);
