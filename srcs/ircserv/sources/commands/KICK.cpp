@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:50:28 by momihamm          #+#    #+#             */
-/*   Updated: 2024/06/07 20:41:38 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/09 00:21:37 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,31 @@
 
 namespace ircserv
 {
+
+	std::string remove_all_with_spaces(std::string args)
+	{
+		std::string result;
+		bool inWord;
+
+		inWord = false;
+		for (std::size_t i = 0; i < args.length(); ++i) 
+		{
+			if (std::isspace(args[i])) 
+			{
+				if (!inWord) 
+				{
+					result += args[i];
+					inWord = true;
+				}
+			} 
+			else 
+			{
+				result += args[i];
+				inWord = false;
+			}
+		}
+		return result;
+	}
 	
 	void vectorsolo(std::vector<std::string> skepta)
 	{
@@ -49,20 +74,25 @@ namespace ircserv
 		std::cout << "commandName: [" << "KICK" << "]" << std::endl;
 		std::cout << "commandArgs: [" << commandArgs << "]" << std::endl;
 
-
 		// ###########################################################################################
 		ircserv::Channel	*chnl;
 		ircserv::Server		*srv;
+		ircserv::Client		*customer;
 		std::string			chnlName;
 		std::string			kickedOut;
 		std::string			kickRaison;
 		int puse;
 		int word;
 
-		// parss data;
-		// std::vector<std::string> & listKicked = 
 		puse = 0;
 		word = 1;
+		if (commandArgs.find(':') != std::string::npos)
+		{
+			kickRaison = commandArgs.substr (commandArgs.find(':') + 1);
+			std::cout << "@@" <<kickRaison << std::endl;
+			commandArgs.erase (commandArgs.find(':') + 1);
+		}
+		commandArgs = remove_all_with_spaces(commandArgs);
 		while (puse != std::string::npos)
 		{
 			puse = commandArgs.find(' ');
@@ -78,16 +108,16 @@ namespace ircserv
 				commandArgs.erase(0, puse + 1);
 				word++;
 			}
-			else if (word == 3)
+			else if (word == 3 && commandArgs.find(':') == std::string::npos)
 			{
+				std::cout << "3333 " << commandArgs << std::endl;
 				kickRaison = commandArgs.substr(0, puse);
 				commandArgs.erase (0, puse + 1);
 				word++;
 			}
+			if (word > 3)
+				break ;
 		}
-		std::cout << "NAME OF CHANNEL = " << chnlName << std::endl;
-		std::cout << "KICKE OUT = " << kickedOut << std::endl;
-		std::cout << "KICK RAISON = " << kickRaison << std::endl;
 		// now check is the input is correct;
 		if (chnlName.empty() || kickedOut.empty())
 		{
@@ -123,19 +153,19 @@ namespace ircserv
 				{
 					// https://modern.ircdocs.horse/#kick-message
 					// Command to kick Matthew from #Finnish
-					*this << "Command to kick " << kickedOut << " from " << chnlName << ircserv::crlf;
-					// return 0;
+					customer = srv->getClientByNickname (kickedOut);
+					*customer << "Command to kick " << kickedOut << " from " << chnlName << ircserv::crlf;
 				}
 				else
 				{
 					// https://modern.ircdocs.horse/#kick-message
 					// Command to kick John from #Finnish using "Speaking English" as the reason (comment).
-					*this << "Command to kick " << kickedOut << " from " << chnlName << " using `" << kickRaison << "' as the reason (comment)."<< ircserv::crlf;
-					// return 0;
+					customer = srv->getClientByNickname (kickedOut);
+					*customer << "Command to kick " << kickedOut << " from " << chnlName << " using `" << kickRaison << "' as the reason (comment)."<< ircserv::crlf;
 				}
-				std::cout << "KICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICK\n";
-				vectorsolo (chnl->getKickedClients());
-				std::cout << "KICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICK\n";
+				// std::cout << "KICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICK\n";
+				// vectorsolo (chnl->getKickedClients());
+				// std::cout << "KICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICK\n";
 				return 0;
 			}
 			else

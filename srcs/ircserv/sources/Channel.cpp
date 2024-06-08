@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:04:36 by ahabachi          #+#    #+#             */
-/*   Updated: 2024/06/07 18:11:01 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/08 19:59:19 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ namespace ircserv
 		this->_operators.clear();
 		this->_invitation_list.clear();
 		this->_clients.clear();
-		this->_kicked.clear();
+		this->_kicked.clear();//momihamm
 		this->_stream.str("");
 		this->addClient(operator_nickname);
 	}
