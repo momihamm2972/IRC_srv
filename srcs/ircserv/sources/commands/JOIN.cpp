@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:50:01 by momihamm          #+#    #+#             */
-/*   Updated: 2024/06/07 20:47:16 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/09 02:16:53 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,13 @@ namespace ircserv
 		int															puse;
 		int															puse0;
 
+		if (commandArgs.empty())
+		{
+			// https://modern.ircdocs.horse/#errneedmoreparams-461
+			// "<client> <command> :Not enough parameters"
+			*this << "461 " << this->getNickname() << " <JOIN> :Not enough parameters" << ircserv::crlf;
+			return 1;
+		}
 		puse = commandArgs.find(' ');
 		if (puse != std::string::npos)
 		{
@@ -245,7 +252,7 @@ namespace ircserv
 				// std::cout << "indawhile\n";
 				if (srv->getChannelByName(it->first))
 				{
-					std::cout << "exist  o tanchofo blanha replay\n";
+					std::cout << "exist  o tanchofo blanha replay \n";
 					chnl = srv->getChannelByName(it->first);
 					// work in invited
 					// kicked
@@ -305,12 +312,12 @@ namespace ircserv
 				}
 				else
 				{
-					std::cout << "not exist **********"<<this->getNickname()<<"****************\n";
+					// std::cout << "not exist **********"<<this->getNickname()<<"****************\n";
 					chnl = srv->createChannel(it->first, this->getNickname());
 					if (!it->second.empty())
 					{
 						chnl->setKey(it->second);
-						std::cout << "setkey\n";
+						// std::cout << "setkey\n";
 					}
 					list_of_chles.insert(std::make_pair(it->first, *chnl));
 					std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
@@ -324,7 +331,7 @@ namespace ircserv
 				}
 				it++;
 			}
-			printVector (data);
+			// printVector (data);
 		std::cout << "\n\n\n\n";
 		return (0);
 	};

@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:50:28 by momihamm          #+#    #+#             */
-/*   Updated: 2024/06/09 00:21:37 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/09 00:49:44 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,17 @@ namespace ircserv
 
 		puse = 0;
 		word = 1;
+		if (commandArgs.empty())
+		{
+			// https://modern.ircdocs.horse/#errneedmoreparams-461
+			// "<client> <command> :Not enough parameters"
+			*this << "461 " << kickedOut << " KICK" << " :Not enough parameters" << ircserv::crlf;
+			return 1;
+		}
 		if (commandArgs.find(':') != std::string::npos)
 		{
 			kickRaison = commandArgs.substr (commandArgs.find(':') + 1);
-			std::cout << "@@" <<kickRaison << std::endl;
+			// std::cout << "@@" <<kickRaison << std::endl;
 			commandArgs.erase (commandArgs.find(':') + 1);
 		}
 		commandArgs = remove_all_with_spaces(commandArgs);
