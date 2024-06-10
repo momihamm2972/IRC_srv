@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:50:54 by momihamm          #+#    #+#             */
-/*   Updated: 2024/06/09 04:29:17 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/09 16:25:26 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,29 +116,6 @@ namespace ircserv
 			chnl = srv->getChannelByName(*it);
 			if (chnl)
 			{
-				// is operator;
-				// if (chnl->isOperator(this->getNickname()))
-				// {
-				// 	// https://modern.ircdocs.horse/#part-message
-				// 	// :dan-!d@localhost PART #test    ; dan- is leaving the channel #test
-				// 	if (howManyOperators(chnl->getOperators()) > 1)
-				// 		chnl->removeOperator (this->getNickname());
-				// 	else
-				// 	{
-				// 		if (howManyOperators(chnl->getClients()) == 1)
-				// 		{
-				// 			// https://modern.ircdocs.horse/#part-message
-				// 			// :dan-!d@localhost PART #test    ; dan- is leaving the channel #test
-				// 			*this << this->getNickname() << " is leaving the channel " << *it << ircserv::crlf;
-				// 			srv->removeChannel (*it);
-				// 			return 0;
-				// 		}
-				// 		chnl->addOperator (getNextOperator(chnl->getClients()));
-				// 		chnl->removeOperator (this->getNickname());
-				// 	}
-				// 	*this << this->getNickname() << " is leaving the channel " << *it << ircserv::crlf;
-				// 	// return 0;
-				// }
 				if (chnl->isClient(this->getNickname()))
 				{
 					if (chnl->isOperator(this->getNickname()))

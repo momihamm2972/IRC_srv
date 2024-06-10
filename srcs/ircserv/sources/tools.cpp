@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         :::      ::::::::  */
+/*                                                        :::      ::::::::   */
 /*   tools.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahabachi <ahabachi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 23:14:53 by ahabachi          #+#    #+#             */
-/*   Updated: 2024/05/03 16:51:47 by ahabachi         ###   ########.fr       */
+/*   Updated: 2024/06/09 23:49:37 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*                                                                            */
+
 /*  █████████            ██████████         ██████████         ██████████     */
 /*  ██     ██                    ██                 ██         ██      ██     */
 /*         ██                    ██                 ██         ██      ██     */
@@ -137,5 +137,29 @@ namespace ircserv
 			s = "";
 		}
 		return (word);
+	}
+	std::string remove_all_with_spaces(std::string args)//momihamm
+	{
+		std::string result;
+		bool inWord;
+
+		inWord = false;
+		for (std::size_t i = 0; i < args.length(); ++i) 
+		{
+			if (std::isspace(args[i])) 
+			{
+				if (!inWord) 
+				{
+					result += args[i];
+					inWord = true;
+				}
+			} 
+			else 
+			{
+				result += args[i];
+				inWord = false;
+			}
+		}
+		return result;
 	}
 };

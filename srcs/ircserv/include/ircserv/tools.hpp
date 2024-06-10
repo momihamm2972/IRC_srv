@@ -1,15 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                         :::      ::::::::  */
+/*                                                        :::      ::::::::   */
 /*   tools.hpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahabachi <ahabachi@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 23:14:53 by ahabachi          #+#    #+#             */
-/*   Updated: 2024/05/03 16:51:47 by ahabachi         ###   ########.fr       */
+/*   Updated: 2024/06/09 23:51:05 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-/*                                                                            */
+
 /*  █████████            ██████████         ██████████         ██████████     */
 /*  ██     ██                    ██                 ██         ██      ██     */
 /*         ██                    ██                 ██         ██      ██     */
@@ -49,4 +49,5 @@ namespace ircserv
 	void        *memcpy(void *dst, const void *src, size_t n);
 	void        bzero(void *s, size_t n);
 	std::string nextWord(std::string &s);
+	std::string remove_all_with_spaces(std::string args);//momihamm
 };

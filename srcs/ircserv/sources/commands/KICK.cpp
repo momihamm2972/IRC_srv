@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:50:28 by momihamm          #+#    #+#             */
-/*   Updated: 2024/06/09 00:49:44 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/09 23:49:16 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,30 @@
 namespace ircserv
 {
 
-	std::string remove_all_with_spaces(std::string args)
-	{
-		std::string result;
-		bool inWord;
+	// std::string remove_all_with_spaces(std::string args)
+	// {
+	// 	std::string result;
+	// 	bool inWord;
 
-		inWord = false;
-		for (std::size_t i = 0; i < args.length(); ++i) 
-		{
-			if (std::isspace(args[i])) 
-			{
-				if (!inWord) 
-				{
-					result += args[i];
-					inWord = true;
-				}
-			} 
-			else 
-			{
-				result += args[i];
-				inWord = false;
-			}
-		}
-		return result;
-	}
+	// 	inWord = false;
+	// 	for (std::size_t i = 0; i < args.length(); ++i) 
+	// 	{
+	// 		if (std::isspace(args[i])) 
+	// 		{
+	// 			if (!inWord) 
+	// 			{
+	// 				result += args[i];
+	// 				inWord = true;
+	// 			}
+	// 		} 
+	// 		else 
+	// 		{
+	// 			result += args[i];
+	// 			inWord = false;
+	// 		}
+	// 	}
+	// 	return result;
+	// }
 	
 	void vectorsolo(std::vector<std::string> skepta)
 	{

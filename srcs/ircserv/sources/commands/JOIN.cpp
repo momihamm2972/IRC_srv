@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:50:01 by momihamm          #+#    #+#             */
-/*   Updated: 2024/06/09 02:16:53 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/10 01:50:28 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,6 +256,18 @@ namespace ircserv
 					chnl = srv->getChannelByName(it->first);
 					// work in invited
 					// kicked
+					if (chnl->getTopic().empty())
+					{
+						// https://modern.ircdocs.horse/#rplnotopic-331
+						// "<client> <channel> :No topic is set"
+						*this << "331 <" << this->getNickname() << "> <" << chnl->getName() << "> :No topic is set" << ircserv::crlf;
+					}
+					if (!(chnl->getTopic().empty()))
+					{
+						// https://modern.ircdocs.horse/#rpltopic-332
+						// "<client> <channel> :<topic>"
+						*this << "332 <" << this->getNickname() << "> <" << chnl->getName() << "> : " << chnl->getTopic() << ircserv::crlf;
+					}
 					if (chnl->isKicked(this->getNickname()) == true)
 					{
 						// https://modern.ircdocs.horse/#errbannedfromchan-474
