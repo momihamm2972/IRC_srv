@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:50:54 by momihamm          #+#    #+#             */
-/*   Updated: 2024/06/09 16:25:26 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:23:17 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ namespace ircserv
 		std::vector<std::string>::iterator it;
 
 		srv = this->getServer();
-		if (commandArgs.empty())
+		if (commandArgs.empty()  || (commandArgs.length() == 1 && commandArgs[0] == ':'))
 		{
 			// https://modern.ircdocs.horse/#errneedmoreparams-461
 			// "<client> <command> :Not enough parameters"
-			*this << "461 " << this->getNickname() << " <PART> :Not enough parameters" << ircserv::crlf;
+			*this << "461 " << this->getNickname() << " PART :Not enough parameters" << ircserv::crlf;
 			return 1;
 		}
 		// parss data
@@ -130,7 +130,7 @@ namespace ircserv
 							{
 								// https://modern.ircdocs.horse/#part-message
 								// :dan-!d@localhost PART #test    ; dan- is leaving the channel #test
-								*this << this->getNickname() << " is leaving the channel " << *it << ircserv::crlf;
+								*this << this->getNickname() << " is leaving the channel" << *it << ircserv::crlf;
 								srv->removeChannel (*it);
 								return 0;
 							}
@@ -143,14 +143,14 @@ namespace ircserv
 					// https://modern.ircdocs.horse/#part-message
 					// :dan-!d@localhost PART #test    ; dan- is leaving the channel #test
 					chnl->removeClient(this->getNickname());
-					*this << this->getNickname() << " is leaving the channel " << *it << ircserv::crlf;
+					*this << this->getNickname() << " is leaving the channel" << *it << ircserv::crlf;
 					return 0;
 				}
 				else
 				{
 					// https://modern.ircdocs.horse/#errnotonchannel-442
 					// "<client> <channel> :You're not on that channel"
-					*this << "442 <" << this->getNickname() << "> <" << *it <<"> :You're not on that channel" << ircserv::crlf;
+					*this << "442 " << this->getNickname() << " " << *it <<" :You're not on that channel" << ircserv::crlf;
 					return 0;
 				}
 			}
@@ -158,7 +158,7 @@ namespace ircserv
 			{
 				// https://modern.ircdocs.horse/#errnosuchchannel-403
 				// "<client> <channel> :No such channel"
-				*this << "403 <" << this->getNickname() << "> <" << *it << "> :No such channel" << ircserv::crlf;
+				*this << "403 " << this->getNickname() << " " << *it << " :No such channel" << ircserv::crlf;
 				return 1;
 			}
 			it++;

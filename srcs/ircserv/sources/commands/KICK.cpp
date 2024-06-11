@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:50:28 by momihamm          #+#    #+#             */
-/*   Updated: 2024/06/09 23:49:16 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:25:01 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,33 +30,7 @@
 #include <iostream>
 
 namespace ircserv
-{
-
-	// std::string remove_all_with_spaces(std::string args)
-	// {
-	// 	std::string result;
-	// 	bool inWord;
-
-	// 	inWord = false;
-	// 	for (std::size_t i = 0; i < args.length(); ++i) 
-	// 	{
-	// 		if (std::isspace(args[i])) 
-	// 		{
-	// 			if (!inWord) 
-	// 			{
-	// 				result += args[i];
-	// 				inWord = true;
-	// 			}
-	// 		} 
-	// 		else 
-	// 		{
-	// 			result += args[i];
-	// 			inWord = false;
-	// 		}
-	// 	}
-	// 	return result;
-	// }
-	
+{	
 	void vectorsolo(std::vector<std::string> skepta)
 	{
 		std::vector<std::string>::iterator it;
@@ -86,17 +60,17 @@ namespace ircserv
 
 		puse = 0;
 		word = 1;
-		if (commandArgs.empty())
+		if (commandArgs.empty() || (commandArgs.length() == 1 && commandArgs[0] == ':'))
 		{
 			// https://modern.ircdocs.horse/#errneedmoreparams-461
 			// "<client> <command> :Not enough parameters"
-			*this << "461 " << kickedOut << " KICK" << " :Not enough parameters" << ircserv::crlf;
+			// std::cout << "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n";
+			*this << "461 " << " KICK" << " :Not enough parameters" << ircserv::crlf;
 			return 1;
 		}
 		if (commandArgs.find(':') != std::string::npos)
 		{
 			kickRaison = commandArgs.substr (commandArgs.find(':') + 1);
-			// std::cout << "@@" <<kickRaison << std::endl;
 			commandArgs.erase (commandArgs.find(':') + 1);
 		}
 		commandArgs = remove_all_with_spaces(commandArgs);
@@ -117,7 +91,6 @@ namespace ircserv
 			}
 			else if (word == 3 && commandArgs.find(':') == std::string::npos)
 			{
-				std::cout << "3333 " << commandArgs << std::endl;
 				kickRaison = commandArgs.substr(0, puse);
 				commandArgs.erase (0, puse + 1);
 				word++;
@@ -125,12 +98,12 @@ namespace ircserv
 			if (word > 3)
 				break ;
 		}
-		// now check is the input is correct;
 		if (chnlName.empty() || kickedOut.empty())
 		{
 			// https://modern.ircdocs.horse/#errneedmoreparams-461
 			// "<client> <command> :Not enough parameters"
-			*this << "461 " << kickedOut << " KICK" << " :Not enough parameters" << ircserv::crlf;
+			std::cout << "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\n";
+			*this << ":IRCServer 461 KICK :Not enough parameters" << ircserv::crlf;
 			return 1;
 		}
 		if (chnlName.find ('#') == std::string::npos && chnlName.find ('&') == std::string::npos)
@@ -142,7 +115,8 @@ namespace ircserv
 		}
 		srv = this->getServer();
 		chnl = srv->getChannelByName(chnlName);
-		std::vector<std::string>& listKicked = chnl->getKickedClients();
+		std::vector<std::string>& list_of_clients_in_channel = chnl->getClients();
+		std::vector<std::string>::iterator it;
 		if (!chnl)
 		{
 			// https://modern.ircdocs.horse/#errnosuchchannel-403
@@ -155,24 +129,30 @@ namespace ircserv
 			if (chnl->isClient(kickedOut) == true)
 			{
 				chnl->removeClient(kickedOut);
-				listKicked.push_back(kickedOut);
 				if (kickRaison.empty())
 				{
-					// https://modern.ircdocs.horse/#kick-message
-					// Command to kick Matthew from #Finnish
-					customer = srv->getClientByNickname (kickedOut);
-					*customer << "Command to kick " << kickedOut << " from " << chnlName << ircserv::crlf;
+					it = list_of_clients_in_channel.begin();
+					while (it != list_of_clients_in_channel.end())
+					{
+						customer = srv->getClientByNickname(*it);
+						// https://modern.ircdocs.horse/#kick-message
+						// Command to kick Matthew from #Finnish
+						*customer << "Command to kick " << kickedOut << " from " << chnlName << ircserv::crlf;
+						it++;
+					}
 				}
 				else
 				{
-					// https://modern.ircdocs.horse/#kick-message
-					// Command to kick John from #Finnish using "Speaking English" as the reason (comment).
-					customer = srv->getClientByNickname (kickedOut);
-					*customer << "Command to kick " << kickedOut << " from " << chnlName << " using `" << kickRaison << "' as the reason (comment)."<< ircserv::crlf;
+					it = list_of_clients_in_channel.begin();
+					while (it != list_of_clients_in_channel.end())
+					{
+						customer = srv->getClientByNickname(*it);
+						// https://modern.ircdocs.horse/#kick-message
+						// Command to kick John from #Finnish using "Speaking English" as the reason (comment).
+						*customer << "Command to kick " << kickedOut << " from " << chnlName << " using " << kickRaison << " as the reason (comment)."<< ircserv::crlf;
+						it++;
+					}
 				}
-				// std::cout << "KICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICK\n";
-				// vectorsolo (chnl->getKickedClients());
-				// std::cout << "KICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICKKICK\n";
 				return 0;
 			}
 			else

@@ -24,6 +24,7 @@
 
 # include "../include/ircserv/tools.hpp"
 # include <iostream>
+# include <vector>
 
 namespace ircserv
 {
@@ -161,5 +162,25 @@ namespace ircserv
 			}
 		}
 		return result;
+	}
+	void	splitWords(std::vector<std::string>& words, std::string& phrase)
+	{
+		phrase = ircserv::trim(phrase);
+		while (true)
+		{
+			size_t word_len = 0;
+			while ((word_len < phrase.length()) && (phrase[word_len] != ',') && (phrase[word_len] != ' '))
+			{
+				word_len++;
+			}
+			std::string word = phrase.substr(0, word_len);
+			words.push_back(word);
+			if ((word_len >= phrase.length()) || (phrase[word_len] == ' '))
+			{
+				phrase = phrase.substr(word_len, phrase.length());
+				break;
+			}
+			phrase = phrase.substr(word_len + 1, phrase.length());
+		}
 	}
 };

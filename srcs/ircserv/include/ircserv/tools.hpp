@@ -50,4 +50,5 @@ namespace ircserv
 	void        bzero(void *s, size_t n);
 	std::string nextWord(std::string &s);
 	std::string remove_all_with_spaces(std::string args);//momihamm
+	void	    splitWords(std::vector<std::string>& words, std::string& phrase);
 };

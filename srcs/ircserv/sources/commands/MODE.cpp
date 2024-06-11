@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 21:30:11 by ahaloui           #+#    #+#             */
-/*   Updated: 2024/06/06 21:55:03 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/11 18:08:38 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ namespace ircserv
     }
 	int Client::MODE(std::string commandArgs)
 	{
+        std::cout << "commandName: [" << "MODE" << "]" << std::endl;
+		std::cout << "commandArgs: [" << commandArgs << "]" << std::endl;
+        
         ircserv::Server *server;
         ircserv::Channel *channel;
         std::string channelName = "";

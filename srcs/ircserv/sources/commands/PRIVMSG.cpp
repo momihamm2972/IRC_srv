@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PRIVMSG.cpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 18:43:21 by ahaloui           #+#    #+#             */
-/*   Updated: 2024/05/13 11:56:16 by ahaloui          ###   ########.fr       */
+/*   Updated: 2024/06/11 18:10:04 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ namespace ircserv
 	int Client::PRIVMSG(std::string commandArgs)
 	{
 
+		std::cout << "commandName: [" << "PRIVMSG" << "]" << std::endl;
+		std::cout << "commandArgs: [" << commandArgs << "]" << std::endl;
 		// privmsg ahaloui,ahabach,aymene:test test test
 		// privmsg ahaloui,food,aymene hello world
 

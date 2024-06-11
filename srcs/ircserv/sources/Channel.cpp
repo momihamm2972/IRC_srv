@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:04:36 by ahabachi          #+#    #+#             */
-/*   Updated: 2024/06/08 19:59:19 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:43:22 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ namespace ircserv
 		this->_operators.clear();
 		this->_invitation_list.clear();
 		this->_clients.clear();
-		this->_kicked.clear();//momihamm
+		// this->_kicked.clear();//momihamm
 	}
 	
 	Channel::~Channel()
@@ -51,7 +51,7 @@ namespace ircserv
 		this->_operators.clear();
 		this->_invitation_list.clear();
 		this->_clients.clear();
-		this->_kicked.clear();//momihamm
+		// this->_kicked.clear();//momihamm
 	}
 	
 	Channel& Channel::operator=(Channel const& other)
@@ -68,7 +68,7 @@ namespace ircserv
 		this->_operators       = other._operators;
 		this->_invitation_list = other._invitation_list;
 		this->_clients         = other._clients;
-		this->_kicked		   = other._kicked;//momihamm
+		// this->_kicked		   = other._kicked;//momihamm
 		this->_stream.str(other._stream.str());
 		return (*this);
 	}
@@ -87,7 +87,7 @@ namespace ircserv
 		this->_operators.clear();
 		this->_invitation_list.clear();
 		this->_clients.clear();
-		this->_kicked.clear();//momihamm
+		// this->_kicked.clear();//momihamm
 		this->_stream.str("");
 		this->addClient(operator_nickname);
 	}
@@ -105,10 +105,10 @@ namespace ircserv
 	{
 		return (this->_invitation_list);
 	}
-	std::vector<std::string /* nickname */> &Channel::getKickedClients(void)//momihamm
-	{
-		return (this->_kicked);
-	}
+	// std::vector<std::string /* nickname */> &Channel::getKickedClients(void)//momihamm
+	// {
+	// 	// return (this->_kicked);
+	// }
 	
 	/* ****************** methods ****************** */
 	bool Channel::isClient(std::string nickname)
@@ -210,19 +210,19 @@ namespace ircserv
 		}
 	}
 
-	bool Channel::isKicked(std::string nickname)//momihamm
-	{
-		std::vector<std::string>::iterator it = std::find(
-			_kicked.begin(),
-			_kicked.end(),
-			nickname
-		);
-		if (it != _kicked.end())
-		{
-			return (true);
-		}
-		return (false);
-	}
+	// bool Channel::isKicked(std::string nickname)//momihamm
+	// {
+	// 	std::vector<std::string>::iterator it = std::find(
+	// 		_kicked.begin(),
+	// 		_kicked.end(),
+	// 		nickname
+	// 	);
+	// 	if (it != _kicked.end())
+	// 	{
+	// 		return (true);
+	// 	}
+	// 	return (false);
+	// }
 
 	bool Channel::isInvited(std::string nickname)
 	{
@@ -241,6 +241,16 @@ namespace ircserv
 	void Channel::inviteClient(std::string nickname)
 	{
 		std::vector<std::string>::iterator it;
+
+		// it = std::find(
+		// 	this->_kicked.begin(),
+		// 	this->_kicked.end(),
+		// 	nickname
+		// );
+		// if (it != _kicked.end())
+		// {
+		// 	_kicked.erase(it);
+		// }
 		it = std::find(
 			this->getClients().begin(),
 			this->getClients().end(),

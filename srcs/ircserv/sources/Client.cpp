@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Client.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:06:11 by ahabachi          #+#    #+#             */
-/*   Updated: 2024/05/14 22:09:50 by ahaloui          ###   ########.fr       */
+/*   Updated: 2024/06/11 18:00:01 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,9 @@ namespace ircserv
 			// client disconnected
 			return (false);			
 		}
+		std::string message(this->_buffer, size);
+
+		std::cout << "message: |" << message;
 		this->_fullbuffer += std::string(this->_buffer, size);
 		this->check_command();
 		this->parse_command();

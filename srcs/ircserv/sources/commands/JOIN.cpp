@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:50:01 by momihamm          #+#    #+#             */
-/*   Updated: 2024/06/10 01:50:28 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/11 22:24:48 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,23 +31,20 @@
 
 namespace ircserv
 {
-	int	howManyWord(std::string str)
+	std::string client_of_channel(std::vector<std::string> channel)
 	{
-		int	end;
-		int	cont;
-	
-		end = str.find(',');
-		cont = 0;
-		while(end != std::string::npos)
+		std::vector<std::string>::iterator it;
+		std::string str;
+
+		it = channel.begin();
+		str = "";
+		while (it != channel.end())
 		{
-			end = str.find (',');
-			if (end != std::string::npos)
-				cont++;
-			str.erase(0,end + 1);
+			str += "@";
+			str += *it;
+			it++;
 		}
-		if (end == std::string::npos && !str.empty())
-			cont++;
-		return cont;
+		return str;
 	}
 	
 	void	printMap(std::map<std::string , ircserv::Channel>  mAp)
@@ -79,91 +76,7 @@ namespace ircserv
 		}
 		std::cout << "VECTORVECTORVECTORVECTORVECTORVECTORVECTORVECTOR\n";
 	}
-	
-	std::vector<std::pair<std::string, std::string> > parssAndUseData(std::string str1, std::string str2)
-	{
-		std::vector<std::pair<std::string, std::string> >			data;
-		std::string													strC;
-		std::string													strK;
-		int															puseChnl;
-		int															puseKey;
-		int															indx;
-		int															words;
-		int															wordsK;
 
-		if (howManyWord(str2) > howManyWord(str1))
-		{
-			std::cout << "ERROR NOT ENOGH PARAM\n";
-			return data;
-		}
-		words = howManyWord (str1);
-		wordsK = howManyWord (str2);
-		indx = 0;
-		std::cout << "num of words is " << words << std::endl;
-		while (indx < words)
-		{
-			puseChnl = str1.find(',');
-			if (puseChnl != std::string::npos)
-			{
-				std::cout << "it continse a comma\n";
-				strC = str1.substr(0, puseChnl);
-				if (strC.find ('#') == std::string::npos && strC.find ('&') == std::string::npos)
-				{
-					std::cout << "ERROR NOT VALID CHNL\n";
-					break;
-				}
-				else
-					strC.erase(0, 1);
-				str1.erase(0, puseChnl + 1);
-				puseKey = str2.find(',');
-				if (puseKey != std::string::npos)
-				{
-					strK = str2.substr(0, puseKey);
-					str2.erase(0, puseKey + 1);
-				}
-				else
-					strK = str2;
-				data.push_back(make_pair(strC,strK));
-			}
-			else
-			{
-				if (str1.find ('#') == std::string::npos && str1.find ('&') == std::string::npos)
-				{
-					std::cout << "ERROR NOT !@# VALID CHNL\n";
-					break;
-				}
-				// else
-				// 	str1.erase(0, 1);
-				data.push_back(make_pair(str1,str2));
-			}
-			if (indx + 1 == wordsK)
-				str2.erase(0);
-			indx++;
-		}
-		return data;
-	}
-	
-	std::string getKeyOfChennal(std::vector<std::pair<std::string, std::string> > data, std::string nameCh)
-	{
-		std::vector<std::pair<std::string, std::string> >::iterator it;
-		std::string													str;
-
-		std::cout << "assan i3lan !@$5 <<" << nameCh << ">>\n";
-		it = data.begin();
-		str = "notFond";
-		while (it != data.end())
-		{
-			std::cout << "\n(((((((((((((((("<< it->first << "))))))))))))))))\n" << std::endl;
-			if (nameCh == it->first)
-			{
-				std::cout << "netflix -> " << it->second << std::endl;
-				return (it->second);
-			}
-			it++;
-		}
-		return str;
-	}
-	
 	void solovectorprinting(std::vector<std::string> skepta)
 	{
 		std::vector<std::string>::iterator it;
@@ -175,28 +88,19 @@ namespace ircserv
 		}
 	}
 
-	size_t	howManyClientInTheChannel(std::vector<std::string> clients)
-	{
-		std::vector<std::string>::iterator it;
-		size_t	cont;
-
-		it = clients.begin();
-		cont = 0;
-		while (it != clients.end())
-		{
-			it++;
-			cont++;
-		}
-		return cont;
-	}
 
 	int Client::JOIN(std::string commandArgs)
 	{
 		std::cout << "commandName: [" << "JOIN" << "]" << std::endl;
 		std::cout << "commandArgs: [" << commandArgs << "]" << std::endl;
-	
-		std::vector<std::pair<std::string, std::string> >			data;
-		std::vector<std::pair<std::string, std::string> >::iterator it;
+		std::string commandArgsCopy = commandArgs;
+		std::vector<std::string> channel_names;
+		std::vector<std::string> channel_keys;
+		// std::string cmd = "JOIN";
+
+		
+
+// ########
 		ircserv::Server												*srv;
 		srv = this->getServer();
 		std::map<std::string /*channel_name*/, ircserv::Channel>& list_of_chles = srv->getChannels();
@@ -206,90 +110,76 @@ namespace ircserv
 		int															puse;
 		int															puse0;
 
-		if (commandArgs.empty())
+		// if (commandArgs.length() == 1 && commandArgs[0] == '#')
+		if (commandArgs.empty() || (commandArgs.length() == 1 && commandArgs[0] == '#'))
 		{
 			// https://modern.ircdocs.horse/#errneedmoreparams-461
 			// "<client> <command> :Not enough parameters"
-			*this << "461 " << this->getNickname() << " <JOIN> :Not enough parameters" << ircserv::crlf;
+			*this << "461 " << this->getNickname() << " JOIN :Not enough parameters" << ircserv::crlf;
 			return 1;
 		}
-		puse = commandArgs.find(' ');
-		if (puse != std::string::npos)
+		// check errors befor joining;
+		ircserv::splitWords(channel_names, commandArgsCopy);
+		ircserv::splitWords(channel_keys , commandArgsCopy);
+		for(size_t i = 0; i < channel_names.size(); i++)
 		{
-			str1 = commandArgs.substr (0, puse);
-			str2 = commandArgs.substr (puse + 1);
-			data = parssAndUseData(str1, str2);
-			// std::cout << "UM6P\n";
-		}
-		else
-		{
-			std::cout << "norm\n";
-			str1 = commandArgs.substr(0);
-			puse = commandArgs.find(',');
-			if (puse != std::string::npos)
+			std::string channel_name = channel_names[i];
+			std::string channel_key = "";
+			if (channel_name.empty())
 			{
-				data = parssAndUseData(str1, "");
+				// https://modern.ircdocs.horse/#errbadchanmask-476
+				  // "<channel> :Bad Channel Mask"
+				*this << "476 " << channel_name << " :Bad Channel Mask" << ircserv::crlf;
+				continue ;
 			}
-			else
+			if (i < channel_keys.size())
 			{
-				if (commandArgs.find ('#') == std::string::npos && commandArgs.find ('&') == std::string::npos)
-				{
-					// https://modern.ircdocs.horse/#errnosuchchannel-403
-					// "<client> <channel> :No such channel"
-					*this << "403 " << this->getNickname() << " " << chnl->getName() << " :No such channel" << ircserv::crlf;
-					return 1;
-				}
-				// else
-				// 	commandArgs.erase(0, 1);
-				data.push_back(make_pair(commandArgs,""));
+				channel_key = channel_keys[i];
 			}
-		}
-			it = data.begin();
-			std::cout << "icame " << it->first << std::endl;
 			
-			while (it != data.end())
-			{
 				// std::cout << "indawhile\n";
-				if (srv->getChannelByName(it->first))
+				if (srv->getChannelByName(channel_name))
 				{
 					std::cout << "exist  o tanchofo blanha replay \n";
-					chnl = srv->getChannelByName(it->first);
+					chnl = srv->getChannelByName(channel_name);
+					if (chnl->isClient(this->getNickname()))
+					{
+						// https://modern.ircdocs.horse/#erruseronchannel-443
+						// "<client> <channel> :is already on channel"
+						*this << "443 " << this->getNickname() << " " << chnl->getName() << " :is already on channel" << ircserv::crlf;
+						return 0;
+					}
+					if (chnl->hasMode(CHANNEL_MODE_L) == true)
+					{
+						if (chnl->getLimit() <= chnl->getClients().size())
+						{
+							// https://modern.ircdocs.horse/#errchannelisfull-471
+							// "<client> <channel> :Cannot join channel (+l)"
+							*this << "471 " << this->getNickname() << " " << chnl->getName() << " :Cannot join channel (+l)" << ircserv::crlf;
+							return 1;
+						}
+					}
 					// work in invited
 					// kicked
 					if (chnl->getTopic().empty())
 					{
 						// https://modern.ircdocs.horse/#rplnotopic-331
 						// "<client> <channel> :No topic is set"
-						*this << "331 <" << this->getNickname() << "> <" << chnl->getName() << "> :No topic is set" << ircserv::crlf;
+						*this << "331 " << this->getNickname() << " " << chnl->getName() << " :No topic is set" << ircserv::crlf;
 					}
-					if (!(chnl->getTopic().empty()))
+					else
 					{
 						// https://modern.ircdocs.horse/#rpltopic-332
 						// "<client> <channel> :<topic>"
-						*this << "332 <" << this->getNickname() << "> <" << chnl->getName() << "> : " << chnl->getTopic() << ircserv::crlf;
+						// topicRep = ":IRCServer 332 " + clientStates[clientSocket].nickname + " " + channel + " " + Topic +"\r\n" ;
+						*this << "332 " << this->getNickname() << " " << chnl->getName() << " " << chnl->getTopic() << ircserv::crlf;
 					}
-					if (chnl->isKicked(this->getNickname()) == true)
-					{
-						// https://modern.ircdocs.horse/#errbannedfromchan-474
-						// "<client> <channel> :Cannot join channel (+b)"
-						*this << "474 <" << this->getNickname() << "> <" << chnl->getName() << "> :Cannot join channel (+b)" << ircserv::crlf;
-						return 1;
-					}
+					
 					// 
-					if (chnl->hasMode(CHANNEL_MODE_L) == true)
-					{
-						// std::cout << "131313131313311313131313131313131313133113131313131313131331131331313   >>" << chnl->getLimit() << "   >??"<<  howManyClientInTheChannel(chnl->getClients())<<"\n";
-						if (chnl->getLimit() <= howManyClientInTheChannel(chnl->getClients()))
-						{
-							// https://modern.ircdocs.horse/#errchannelisfull-471
-							// "<client> <channel> :Cannot join channel (+l)"
-							*this << "471 <" << this->getNickname() << "> <" << chnl->getName() << "> :Cannot join channel (+l)" << ircserv::crlf;
-							return 1;
-						}
-					}
+					
 					// if (!(chnl->getKey().compare("") == 0))
 					// {
-						if (it->second.compare(chnl->getKey()) != 0)
+						if (channel_key.compare(chnl->getKey()) != 0)
 						{
 							// https://modern.ircdocs.horse/#errbadchannelkey-475
 							// "<client> <channel> :Cannot join channel (+k)"
@@ -309,40 +199,76 @@ namespace ircserv
 						}
 					}
 					// work in invited
-					if (chnl->isClient(this->getNickname()) != true)
-					{
+					// if (chnl->isClient(this->getNickname()) != true)
+					// {
 						// https://modern.ircdocs.horse/#rplendofnames-366
 						//   "<client> <channel> :End of /NAMES list"
-						chnl->addClient (this->getNickname());
-					}
-					std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
-					solovectorprinting (chnl->getOperators());
-					std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
-					std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
-					solovectorprinting (chnl->getClients());
-					std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
+						// std::string broadcastMessage = ":" + client.getNickname() + "!" + client.getUsername() + "@" + this->getServerHostName() + " JOIN " + channelName + "\r\n";
+						// *this << ":" << this->getNickname() << "!" << this->_username << "@" << this->_hostname << " JOIN " << chnl->getName() << ircserv::crlf;
+					// 	chnl->addClient (this->getNickname());
+					// // }
+					// std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
+					// solovectorprinting (chnl->getOperators());
+					// std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
+					// std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
+					// solovectorprinting (chnl->getClients());
+					// std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
+					*this << ":" << this->getNickname() << "!" << this->_username << "@" << this->_hostname << " JOIN " << chnl->getName() << ircserv::crlf;
+					
+					// if (chnl->hasMode() == true)
+					// {
+					// 	*this << "324 " <<  this->getNickname() << " " << chnl->getName() << " + " << 
+					// }
+					*this << "353 " << this->getNickname() << " = " << chnl->getName() << " :" << client_of_channel(chnl->getClients()) << ircserv::crlf;
+					*this << "366 " << this->getNickname() << " = " << chnl->getName() << " :End of /NAMES list." << ircserv::crlf;
 				}
 				else
 				{
-					// std::cout << "not exist **********"<<this->getNickname()<<"****************\n";
-					chnl = srv->createChannel(it->first, this->getNickname());
-					if (!it->second.empty())
+					std::cout << "not exist **********"<<this->getNickname()<<"****************\n";
+					chnl = srv->createChannel(channel_name, this->getNickname());
+					if (!channel_key.empty())
 					{
-						chnl->setKey(it->second);
+						chnl->setKey(channel_key);
 						// std::cout << "setkey\n";
 					}
-					list_of_chles.insert(std::make_pair(it->first, *chnl));
-					std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
-					solovectorprinting (chnl->getOperators());
-					std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
-					std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
-					solovectorprinting (chnl->getClients());
-					std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
-					if (chnl)
-						*this << "366 " << this->getNickname() << " " << chnl->getName() << " :End of /NAMES list" << ircserv::crlf;  
+					list_of_chles.insert(std::make_pair(channel_name, *chnl));
+					// https://modern.ircdocs.horse/#rplendofnames-366
+					//   "<client> <channel> :End of /NAMES list"
+					
+// void printChanneljoin(std::map<int, ClientState>& clientStates, std::string Topic , int clientSocket, const std::string& channel ,std::string chanelClient, std::string mode)
+// {
+// 	std::string reply = ":" +  clientStates[clientSocket].nickname + "!" + clientStates[clientSocket].username + "@" + clientStates[clientSocket].hostname + " JOIN " + channel+ "\r\n";
+// 	send(clientSocket, reply.c_str() , reply.size(), 0);
+// 	if (mode != "")
+// 	{
+// 		std::string modechan = ":IRCServer 324 " + clientStates[clientSocket].nickname + " " + channel + " +" + mode + "\r\n" ;
+// 		send(clientSocket, modechan.c_str() , modechan.size(), 0);
+// 	}
+// 	std::string topicRep = ":IRCServer 332 " + clientStates[clientSocket].nickname + " " + channel + " " + Topic +"\r\n" ;
+// 	send(clientSocket, topicRep.c_str() , topicRep.size(), 0);
+// 	std::string adminMsg = ":IRCServer 353 " + clientStates[clientSocket].nickname + " = " + channel + " :" + chanelClient +"\r\n" ;
+// 	send(clientSocket, adminMsg.c_str() , adminMsg.size(), 0);
+// 	std::string endOfList = ":IRCServer 366 " + clientStates[clientSocket].nickname + " = " + channel + " :End of /NAMES list.\r\n" ;
+// 	send(clientSocket, endOfList.c_str() , endOfList.size(), 0);
+// }
+					
+					*this << ":" + this->getNickname() + "!" + this->_username + "@" + this->_hostname + " JOIN " + chnl->getName()  + "\r\n";
+					
+					// if (chnl->hasMode() == true)
+					// {
+					// 	*this << "324 " <<  this->getNickname() << " " << chnl->getName() << " + " << 
+					// }
+					*this << "353 " + this->getNickname() + " = " + chnl->getName() + " :" + client_of_channel(chnl->getClients())  + "\r\n";
+					*this << "366 " + this->getNickname() + " = " + chnl->getName() + " :End of /NAMES list.\r\n";
+					// std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
+					// solovectorprinting (chnl->getOperators());
+					// std::cout << "OperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperatorOperator\n";
+					// std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
+					// solovectorprinting (chnl->getClients());
+					// std::cout << "ClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClientsClients\n";
+					// *this << "366 " << this->getNickname() << " " << chnl->getName() << " :End of /NAMES list" << ircserv::crlf;  
 				}
-				it++;
-			}
+		}
 			// printVector (data);
 		std::cout << "\n\n\n\n";
 		return (0);

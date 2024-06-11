@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   INVITE.cpp                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahaloui <ahaloui@student.42.fr>            +#+  +:+       +#+        */
+/*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:49:53 by momihamm          #+#    #+#             */
-/*   Updated: 2024/05/14 22:33:23 by ahaloui          ###   ########.fr       */
+/*   Updated: 2024/06/11 15:20:50 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ namespace ircserv
 		}
 		if (channel->isInvited(nickname))
 		{
+			// https://modern.ircdocs.horse/#erruseronchannel-443
 			*this << "443 " << this->getNickname() << " " << nickname << " " << channel_name << " :is already on channel" << ircserv::crlf;
 			return (0);
 		}

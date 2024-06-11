@@ -6,7 +6,7 @@
 /*   By: momihamm <momihamm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 22:04:36 by ahabachi          #+#    #+#             */
-/*   Updated: 2024/06/09 04:08:38 by momihamm         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:43:35 by momihamm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ namespace ircserv
 			std::vector<std::string /* nickname */> _operators;
 			std::vector<std::string /* nickname */> _invitation_list;
 			std::vector<std::string /* nickname */> _clients;
-			std::vector<std::string /* nickname */> _kicked;//momihamm
+			// std::vector<std::string /* nickname */> _kicked;//momihamm
 		public:
 			Channel();
 			~Channel();
@@ -76,7 +76,7 @@ namespace ircserv
 			bool        addOperator(std::string nickname);
 			void        removeOperator(std::string nickname);
 			
-			bool		isKicked(std::string nickname);//momihamm
+			// bool		isKicked(std::string nickname);//momihamm
 
 			bool        isInvited(std::string nickname);
 			void        inviteClient(std::string nickname);
